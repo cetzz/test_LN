@@ -10,6 +10,9 @@
  	$dbcharset = 'utf8';
     define('SWAPI','https://swapi.dev/api');
 
+/***************************************************************************
+ * Create database
+ */
     try {
 		$connection = new PDO('mysql:host=' . $dbhost . ';charset=' . $dbcharset, $dbuser, $dbpass, [
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
@@ -46,7 +49,9 @@
         exit();
     }
 
-
+/***************************************************************************
+ * Initialize variables and create $ch.
+ */
     
     createTables();
 	$ch = curl_init();
@@ -55,6 +60,10 @@
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
     $totalSuccesses= 0;
     $totalFails= 0;
+
+/***************************************************************************
+ * Store Films on the database
+ */
 
     curl_setopt($ch, CURLOPT_URL,SWAPI.'/films/');
     $successful=0;
@@ -76,6 +85,11 @@
             }
     }while(isset($response['next']));
     $return['log'][] = ' '.$successful.' films were inserted successfully, '.$failed.' failed.';
+
+
+/***************************************************************************
+ * Store Starships on the database
+ */
 
     curl_setopt($ch, CURLOPT_URL,SWAPI.'/starships/');
     $successful=0;
@@ -103,7 +117,9 @@
     $return['log'][] = ' '.$successful.' starships were inserted successfully, '.$failed.' failed.';
     $return['log'][] = ' '.$successfulFilms.' starship and film relationships were inserted successfully, '.$failedFilms.' failed.';
 
-
+/***************************************************************************
+ * Store Vehicles on the database
+ */
 
     curl_setopt($ch, CURLOPT_URL,SWAPI.'/vehicles/');
     $successful=0;
@@ -130,12 +146,23 @@
     $totalFails= $totalFails + $failed + $failedFilms;
     $return['log'][] = ' '.$successful.' vehicles were inserted successfully, '.$failed.' failed.';
     $return['log'][] = ' '.$successfulFilms.' vehicle and film relationships were inserted successfully, '.$failedFilms.' failed.';
+
+
+/***************************************************************************
+ * Store Films on the database
+ */
+
     $return['failedInserts']=$totalFails;
     $return['successfulInserts']=$totalSuccesses;
     $return['log'][] = ' Initialization completed. '.$totalSuccesses.' inserts were successful, '.$totalFails.' failed.';
     echo '<pre>';
     print_r(json_encode($return));
     echo '</pre>';
+
+    
+/***
+ * Create tables
+ */
     function createTables(){
         $query="
         DROP TABLE IF EXISTS `Starships`;
@@ -218,7 +245,12 @@
             CONSTRAINT `FK_VF_FilmID` FOREIGN KEY (`FilmID`) REFERENCES Films (`FilmID`) ON DELETE CASCADE ON UPDATE RESTRICT;";    
         executeQuery($query);
     }
-
+    
+/***
+ * Insert   Film
+ * @param   $film                           Coming from the results of SWAPI/films/
+ * @return  if insert was successful or not
+ */
     function insertFilm($film){
         $response=array();
         $query="INSERT INTO `Films` (
@@ -262,6 +294,13 @@
         return $response;
     }
     
+/***
+ * Insert   Vehicle
+ * @param   $vehicle                        Coming from the results of SWAPI/vehicles/
+ * @return  if insert was successful or not,
+ * amount of successful and failed
+ * relationship inserts
+ */
     function insertVehicle($vehicle){
         $response=array();
         $query="INSERT INTO `Vehicles` (
@@ -335,6 +374,15 @@
         return $response;
     }
 
+    
+
+/***
+ * Insert   Starship
+ * @param   $starship                        Coming from the results of SWAPI/starships/
+ * @return  if insert was successful or not,
+ * amount of successful and failed
+ * relationship inserts
+ */
     function insertStarship($starship){
         $response=array();
         $query="INSERT INTO `Starships` (
@@ -413,23 +461,47 @@
         }
         return $response;
     }
+
+    
+/***
+ * get the last insert of the database
+ * @return  last insert ID,
+ */
     function getLastInsert(){
         global $connection;
         return $connection->lastInsertId();
     }
+    
+/***
+ * execute query
+ * @param   $query  
+ * @return  if the query was successful or not
+ */
     function executeQuery($query){
         global $connection;
         return $connection->query($query);
     }
+    
+/***
+ * prepare query to use ->execute()
+ * @param   $query  
+ * @return  prepared query,
+ */
     function prepareQuery($query){
         global $connection;
         return $connection->prepare($query);
     }
+    
+/***
+ * remove Z timezone auxiliary, parse data
+ * @param   $query  
+ * @return  parsed date
+ */
     function getParsedDate($date) {
         return str_replace( // remove timezone auxiliary
             'Z',
             '',
-            explode('.', $date)[0] // get the left halve
+            explode('.', $date)[0] 
         );
     }
 ?>
