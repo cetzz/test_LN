@@ -1,5 +1,8 @@
 <?php
 // ini_set('display_errors', '1');
+
+    $return=array();
+
 	$dbhost = '127.0.0.1';
 	$dbuser = 'root';
 	$dbpass = '';
@@ -17,14 +20,14 @@
     if(isset($_REQUEST['delete'])){
         if (executeQuery('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "'.$dbname.'"')->fetch()[0]!=null){
             executeQuery('DROP DATABASE '.$dbname);
-            echo ('<p style="text-align:center">Base de datos eliminada correctamente.</p><br>');
+            $return['log'][] = 'Database deleted correctly.';
         }else{
-            echo ('<p style="text-align:center">La base de datos no existe, no pudo ser borrada.</p><br>');
+            $return['log'][] = 'The database doesn\'t exist, it couldn\'t be deleted.';
         }
     }
     if (executeQuery('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "'.$dbname.'"')->fetch()[0]==null){
         executeQuery('CREATE DATABASE '.$dbname );
-        echo ('<p style="text-align:center">Base de datos creada correctamente.</p><br>');
+        $return['log'][] = 'Database created correctly.';
         try {
             $connection = new PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname. ';charset=' . $dbcharset, $dbuser, $dbpass, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
@@ -33,25 +36,36 @@
             die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error() . '<br />IP Sevidor: ' . $dbhost . '<br />Usuario: ' . $dbuser);
         }
     }else{
-        echo '<p style="text-align:center">La base de datos <i>'.$dbname.'</i> no se pudo crear, verifique si tiene una base de datos con el mismo nombre. <br><br>
-            <a href="init.php?delete"> Borrar la base existente </a>
-            </p><br>
-        ';
+        $return['log'][] = 'The database <i>'.$dbname.'</i> couldn\'t be created, please check if you have a database with the same name. ';
+        $return['deleteURL']='init.php?delete';
+        echo '<pre>';
+        print_r(json_encode($return));
+        echo '</pre>';
         exit();
     }
 
-    createTables();
 
+    
+    createTables();
 	$ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FORBID_REUSE, false);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    $totalSuccessfuls= 0;
+    $totalFails= 0;
 
     curl_setopt($ch, CURLOPT_URL,SWAPI.'/films/');
-    $response= json_decode(curl_exec($ch),true);
-    do{     
+    $successful=0;
+    $failed=0;
+    do{         
+        $response= json_decode(curl_exec($ch),true);
         foreach ($response['results'] as $film){
-            insertFilm($film);
+            $filmResponse = insertFilm($film);
+            if ($filmResponse['status']){
+                $successful++;
+            }else{
+                $failed--;
+            }
         }
             if (isset($response['next'])){
                 curl_setopt($ch, CURLOPT_URL, SWAPI.'/films/?'.substr($response['next'], strpos($response['next'], "?") + 1));
@@ -59,38 +73,66 @@
                 $response = json_decode(curl_exec($ch),true);
             }
     }while(isset($response['next']));
-    
+    $return['log'][] = ' '.$successful.' films were inserted successfully, '.$failed.' failed.';
+
     curl_setopt($ch, CURLOPT_URL,SWAPI.'/starships/');
-    $response= json_decode(curl_exec($ch),true);
-    $i=0;
+    $successful=0;
+    $failed=0;
+    $successfulFilms=0;
+    $failedFilms=0;
     do{     
+        $response = json_decode(curl_exec($ch),true);
         foreach ($response['results'] as $starship){
-            insertStarship($starship);
-        }
-            if (isset($response['next'])){
-                curl_setopt($ch, CURLOPT_URL, SWAPI.'/starships/?'.substr($response['next'], strpos($response['next'], "?") + 1));
-                $response = array();
-                $response = json_decode(curl_exec($ch),true);
+            $starshipResponse=insertStarship($starship);
+            if ($starshipResponse['status']){
+                $successful++;
+            }else{
+                $failed--;
             }
+            $successfulFilms=$successfulFilms+$starshipResponse['films_successful'];
+            $failedFilms=$failedFilms+$starshipResponse['films_failed'];
+        }
+        if (isset($response['next'])){
+            curl_setopt($ch, CURLOPT_URL, SWAPI.'/starships/?'.substr($response['next'], strpos($response['next'], "?") + 1));
+        }
     }while(isset($response['next']));
+    $totalSuccessfuls= $totalSuccessfuls + $successful + $successfulFilms;
+    $totalFails= $totalFails + $failed + $failedFilms;
+    $return['log'][] = ' '.$successful.' starships were inserted successfully, '.$failed.' failed.';
+    $return['log'][] = ' '.$successfulFilms.' starship and film relationships were inserted successfully, '.$failedFilms.' failed.';
+
 
 
     curl_setopt($ch, CURLOPT_URL,SWAPI.'/vehicles/');
-    $response= json_decode(curl_exec($ch),true);
+    $successful=0;
+    $failed=0;
+    $successfulFilms=0;
+    $failedFilms=0;
     do{     
+        $response = json_decode(curl_exec($ch),true);
         foreach ($response['results'] as $vehicle){
-            insertVehicle($vehicle);
-        }
-            if (isset($response['next'])){
-                curl_setopt($ch, CURLOPT_URL, SWAPI.'/vehicles/?'.substr($response['next'], strpos($response['next'], "?") + 1));
-                $response = array();
-                $response = json_decode(curl_exec($ch),true);
+            $vehicleResponse=insertVehicle($vehicle);
+            if ($vehicleResponse['status']){
+                $successful++;
+            }else{
+                $failed--;
             }
+            $successfulFilms=$successfulFilms+$vehicleResponse['films_successful'];
+            $failedFilms=$failedFilms+$vehicleResponse['films_failed'];
+        }
+        if (isset($response['next'])){
+            curl_setopt($ch, CURLOPT_URL, SWAPI.'/vehicles/?'.substr($response['next'], strpos($response['next'], "?") + 1));
+        }
     }while(isset($response['next']));
+    $totalSuccessfuls= $totalSuccessfuls + $successful + $successfulFilms;
+    $totalFails= $totalFails + $failed + $failedFilms;
+    $return['log'][] = ' '.$successful.' vehicles were inserted successfully, '.$failed.' failed.';
+    $return['log'][] = ' '.$successfulFilms.' vehicle and film relationships were inserted successfully, '.$failedFilms.' failed.';
 
-    echo '<p style="text-align:center"> Tablas de Películas, Naves espaciales, Vehículos y sus relaciones cargadas correctamente.</p><br>';
-    echo '<p style="text-align:center"> Inicialización completada.</p><br>';
-
+    $return['log'][] = ' Initialization completed. '.$totalSuccessfuls.' inserts were successful, '.$totalFails.' failed.';
+    echo '<pre>';
+    print_r(json_encode($return));
+    echo '</pre>';
     function createTables(){
         $query="
         DROP TABLE IF EXISTS `Starships`;
@@ -140,7 +182,7 @@
             `FilmID` int(255) NOT NULL AUTO_INCREMENT,
             `FilmTitle` varchar(255) NULL,
             `FilmEpisodeID` int(255) NULL,
-            `FilmOpeningCrawl` varchar(255) NULL,
+            `FilmOpeningCrawl` text(65535) NULL,
             `FilmDirector` varchar(255) NULL,
             `FilmProducer` varchar(255) NULL,
             `FilmReleaseDate` datetime(6) NULL,
@@ -175,6 +217,7 @@
     }
 
     function insertFilm($film){
+        $response=array();
         $query="INSERT INTO `Films` (
             `FilmTitle`,
             `FilmEpisodeID`,
@@ -203,15 +246,21 @@
             'FilmOpeningCrawl'=>$film['opening_crawl'],
             'FilmDirector'=>$film['director'],
             'FilmProducer'=>$film['producer'],
-            'FilmReleaseDate'=>$film['release_date'],
+            'FilmReleaseDate'=> $film['release_date'],
             'FilmURL'=>$film['url'],
-            'FilmCreated'=>$film['created']
+            'FilmCreated'=> getParsedDate($film['created'])
         );
         $statement=prepareQuery($query);
-        $statement->execute($array);
+        if($statement->execute($array)){
+                $response['status']=true;
+        }else{
+                $response['status']=false;   
+        }
+        return $response;
     }
     
     function insertVehicle($vehicle){
+        $response=array();
         $query="INSERT INTO `Vehicles` (
             `VehicleName`,
             `VehicleModel`,
@@ -259,20 +308,32 @@
             'VehicleCargoCapacity'=>$vehicle['cargo_capacity'],
             'VehicleConsumables'=>$vehicle['consumables'],
             'VehicleURL'=>$vehicle['url'],
-            'VehicleCreated'=>$vehicle['created'],
+            'VehicleCreated'=> getParsedDate($vehicle['created']),
             'VehicleAmount'=>0);
         $statement=prepareQuery($query);
-        $statement->execute($array);
-        $vehicleID=getLastInsert();
+        if($statement->execute($array)){
+                $response['status']=true;
+        }else{
+                $response['status']=false;   
+        }
+        $vehicleID=getLastInsert();      
+        $response['films_successful']=0;
+        $response['films_failed']=0;      
         foreach($vehicle['films'] as $film){
             $query='INSERT INTO `VehiclesInFilms`(`VehicleID`, `FilmID`) VALUES ('.$vehicleID.', :FilmID)';
             $array=array('FilmID'=>str_replace('/','',substr($film, strpos($film, "/films/") + 7)));
             $statement=prepareQuery($query);
-            $statement->execute($array);
+            if($statement->execute($array)){
+                $response['films_successful']++;
+            }else{
+                $response['films_failed']++;
+            }
         }
+        return $response;
     }
 
     function insertStarship($starship){
+        $response=array();
         $query="INSERT INTO `Starships` (
             `StarshipName`,
             `StarshipModel`,
@@ -326,17 +387,28 @@
             'StarshipCargoCapacity'=>$starship['cargo_capacity'],
             'StarshipConsumables'=>$starship['consumables'],
             'StarshipURL'=>$starship['url'],
-            'StarshipCreated'=>$starship['created'],
+            'StarshipCreated'=> getParsedDate($starship['created']),
             'StarshipAmount' => 0 );
         $statement=prepareQuery($query);
-        $statement->execute($array);
-        $starshipID=getLastInsert();
+        if($statement->execute($array)){
+                $response['status']=true;
+        }else{
+                $response['status']=false;   
+        }
+        $starshipID=getLastInsert();      
+        $response['films_successful']=0;
+        $response['films_failed']=0;      
         foreach($starship['films'] as $film){
             $query='INSERT INTO `StarshipsInFilms`(`StarshipID`, `FilmID`) VALUES ('.$starshipID.', :FilmID)';
             $array=array('FilmID'=>str_replace('/','',substr($film, strpos($film, "/films/") + 7)));
             $statement=prepareQuery($query);
-            $statement->execute($array);
+            if($statement->execute($array)){
+                $response['films_successful']++;
+            }else{
+                $response['films_failed']++;
+            }
         }
+        return $response;
     }
     function getLastInsert(){
         global $connection;
@@ -349,5 +421,12 @@
     function prepareQuery($query){
         global $connection;
         return $connection->prepare($query);
+    }
+    function getParsedDate($date) {
+        return str_replace( // remove timezone auxiliary
+            'Z',
+            '',
+            explode('.', $date)[0] // get the left halve
+        );
     }
 ?>
