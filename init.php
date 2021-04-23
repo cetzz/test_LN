@@ -38,6 +38,8 @@
     }else{
         $return['log'][] = 'The database <i>'.$dbname.'</i> couldn\'t be created, please check if you have a database with the same name. ';
         $return['deleteURL']='init.php?delete';
+        $return['failedInserts']=0;
+        $return['successfulInserts']=0;
         echo '<pre>';
         print_r(json_encode($return));
         echo '</pre>';
@@ -51,7 +53,7 @@
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FORBID_REUSE, false);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-    $totalSuccessfuls= 0;
+    $totalSuccesses= 0;
     $totalFails= 0;
 
     curl_setopt($ch, CURLOPT_URL,SWAPI.'/films/');
@@ -96,7 +98,7 @@
             curl_setopt($ch, CURLOPT_URL, SWAPI.'/starships/?'.substr($response['next'], strpos($response['next'], "?") + 1));
         }
     }while(isset($response['next']));
-    $totalSuccessfuls= $totalSuccessfuls + $successful + $successfulFilms;
+    $totalSuccesses= $totalSuccesses + $successful + $successfulFilms;
     $totalFails= $totalFails + $failed + $failedFilms;
     $return['log'][] = ' '.$successful.' starships were inserted successfully, '.$failed.' failed.';
     $return['log'][] = ' '.$successfulFilms.' starship and film relationships were inserted successfully, '.$failedFilms.' failed.';
@@ -124,12 +126,13 @@
             curl_setopt($ch, CURLOPT_URL, SWAPI.'/vehicles/?'.substr($response['next'], strpos($response['next'], "?") + 1));
         }
     }while(isset($response['next']));
-    $totalSuccessfuls= $totalSuccessfuls + $successful + $successfulFilms;
+    $totalSuccesses= $totalSuccesses + $successful + $successfulFilms;
     $totalFails= $totalFails + $failed + $failedFilms;
     $return['log'][] = ' '.$successful.' vehicles were inserted successfully, '.$failed.' failed.';
     $return['log'][] = ' '.$successfulFilms.' vehicle and film relationships were inserted successfully, '.$failedFilms.' failed.';
-
-    $return['log'][] = ' Initialization completed. '.$totalSuccessfuls.' inserts were successful, '.$totalFails.' failed.';
+    $return['failedInserts']=$totalFails;
+    $return['successfulInserts']=$totalSuccesses;
+    $return['log'][] = ' Initialization completed. '.$totalSuccesses.' inserts were successful, '.$totalFails.' failed.';
     echo '<pre>';
     print_r(json_encode($return));
     echo '</pre>';
