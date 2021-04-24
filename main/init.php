@@ -32,7 +32,7 @@ function initializeDatabase($params){
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
             ]);
         } catch (PDOException $e) {
-            die('Error de Conexión (' . mysqli_connect_errno() . ') '. mysqli_connect_error() . '<br />IP Sevidor: ' . $dbhost . '<br />Usuario: ' . $dbuser);
+            die('Connection error (' . mysqli_connect_errno() . ') '. mysqli_connect_error() . '<br />Server IP: ' . $dbhost . '<br />User: ' . $dbuser);
         }
     }else{
         $return['log'][] = 'The database _'.$dbname.'_ couldn\'t be created, please check if you have a database with the same name. ';
