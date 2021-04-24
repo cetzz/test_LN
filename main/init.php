@@ -68,7 +68,7 @@ function initializeDatabase($params){
             if ($filmResponse['status']){
                 $successful++;
             }else{
-                $failed--;
+                $failed++;
             }
         }
             if (isset($response['next'])){
@@ -95,7 +95,7 @@ function initializeDatabase($params){
             if ($starshipResponse['status']){
                 $successful++;
             }else{
-                $failed--;
+                $failed++;
             }
             $successfulFilms=$successfulFilms+$starshipResponse['films_successful'];
             $failedFilms=$failedFilms+$starshipResponse['films_failed'];
@@ -125,7 +125,7 @@ function initializeDatabase($params){
             if ($vehicleResponse['status']){
                 $successful++;
             }else{
-                $failed--;
+                $failed++;
             }
             $successfulFilms=$successfulFilms+$vehicleResponse['films_successful'];
             $failedFilms=$failedFilms+$vehicleResponse['films_failed'];
