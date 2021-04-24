@@ -36,7 +36,7 @@ function initializeDatabase($params){
         }
     }else{
         $return['log'][] = 'The database _'.$dbname.'_ couldn\'t be created, please check if you have a database with the same name. ';
-        $return['deleteURL']='init.php?delete';
+        $return['deleteURL']=LOCAL_URL.'/init/?delete';
         $return['failedInserts']=0;
         $return['successfulInserts']=0;
         return (json_encode($return));
@@ -278,6 +278,8 @@ function initializeDatabase($params){
                 'FilmCreated'=> getParsedDate($film['created'])
             );
             $statement=prepareQuery($query);
+            $filmID=getLastInsert();     
+            executeQuery('UPDATE Films SET FilmURL="'.LOCAL_URL.'/films/'.$filmID.'/" WHERE FilmID='.$filmID);  
             if($statement->execute($array)){
                     $response['status']=true;
             }else{
@@ -351,6 +353,7 @@ function initializeDatabase($params){
                     $response['status']=false;   
             }
             $vehicleID=getLastInsert();      
+            executeQuery('UPDATE Vehicles SET VehicleURL="'.LOCAL_URL.'/vehicles/'.$vehicleID.'/" WHERE VehicleID='.$vehicleID);
             $response['films_successful']=0;
             $response['films_failed']=0;      
             foreach($vehicle['films'] as $film){
@@ -438,7 +441,8 @@ function initializeDatabase($params){
             }else{
                     $response['status']=false;   
             }
-            $starshipID=getLastInsert();      
+            $starshipID=getLastInsert();    
+            executeQuery('UPDATE Starships SET StarshipURL="'.LOCAL_URL.'/starships/'.$starshipID.'/" WHERE StarshipID='.$starshipID);  
             $response['films_successful']=0;
             $response['films_failed']=0;      
             foreach($starship['films'] as $film){
