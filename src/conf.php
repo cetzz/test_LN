@@ -9,7 +9,7 @@
 	);
 	define('MSG_NOT_YET_DEVELOPED','Feature not yet developed.');
 	define('MSG_NOT_FOUND','Not found');
-	define('LOCAL_URL','http://localhost/test/public');
+	define('LOCAL_URL','http://localhost/test_LN/public');
 	$dbhost = '127.0.0.1';
 	$dbuser = 'root';
 	$dbpass = '';
