@@ -15,35 +15,71 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
         array_shift($response);
         return wookieEncode($params,json_encode($response));
     });
-
-    $app->get('/films/', function (Request $request, Response $response) {
-        $params =$request->getQueryParams();
-        return wookieEncode($params,getFilmsByPage((isset($params['page']) && $params['page']!=''?$params['page']:1)));
+    $app->group('/films', function () use ($app) {
+        $app->get('[/]', function (Request $request, Response $response) {
+            $params =$request->getQueryParams();
+            return wookieEncode($params,getFilms((isset($params['page']) && $params['page']!=''?$params['page']:1),(isset($params['search']) && $params['search']!=''?$params['search']:null)));
+        });
+    
+        $app->get('/{id}[/]', function (Request $request, Response $response, $args) {
+            $params =$request->getQueryParams();
+            return wookieEncode($params,searchFilmByID($args['id']));
+        });
     });
 
-    $app->get('/films/{id}/', function (Request $request, Response $response, $args) {
-        $params =$request->getQueryParams();
-        return wookieEncode($params,searchFilmByID($args['id']));
+    $app->group('/starships', function () use ($app) {
+        $app->get('[/]', function (Request $request, Response $response) {
+            $params =$request->getQueryParams();
+            return wookieEncode($params,getStarships((isset($params['page']) && $params['page']!=''?$params['page']:1),(isset($params['search']) && $params['search']!=''?$params['search']:null)));
+        });
+
+        $app->get('/{id}[/]', function (Request $request, Response $response, $args) {
+            $params =$request->getQueryParams();
+            return wookieEncode($params,searchStarshipByID($args['id']));
+        });
+
+        $app->group('/amount', function () use ($app) {
+            $app->get('/get[/]', function (Request $request, Response $response, $args) {
+                $params =$request->getQueryParams();
+                return wookieEncode($params,searchStarshipAmountByID((isset($params['id']) && $params['id']!=''?$params['id']:0)));
+            });
+            $app->get('/increase[/]', function (Request $request, Response $response, $args) {
+                $params =$request->getQueryParams();
+                return wookieEncode($params,increaseStarshipAmountByID((isset($params['id']) && $params['id']!=''?$params['id']:0),(isset($params['amount']) && $params['amount']!=''?$params['amount']:null)));
+            });
+            $app->get('/decrease[/]', function (Request $request, Response $response, $args) {
+                $params =$request->getQueryParams();
+                return wookieEncode($params,decreaseStarshipAmountByID((isset($params['id']) && $params['id']!=''?$params['id']:0),(isset($params['amount']) && $params['amount']!=''?$params['amount']:null)));
+            });
+        });
     });
 
-    $app->get('/starships/', function (Request $request, Response $response) {
-        $params =$request->getQueryParams();
-        return wookieEncode($params,getStarshipsByPage((isset($params['page']) && $params['page']!=''?$params['page']:1)));
-    });
 
-    $app->get('/starships/{id}/', function (Request $request, Response $response, $args) {
-        $params =$request->getQueryParams();
-        return wookieEncode($params,searchStarshipByID($args['id']));
-    });
+    $app->group('/vehicles', function () use ($app) { 
+        $app->get('[/]', function (Request $request, Response $response) {
+            $params =$request->getQueryParams();
+            return wookieEncode($params,getVehicles((isset($params['page']) && $params['page']!=''?$params['page']:1),(isset($params['search']) && $params['search']!=''?$params['search']:null)));
+        });
 
-    $app->get('/vehicles/', function (Request $request, Response $response) {
-        $params =$request->getQueryParams();
-        return wookieEncode($params,getVehiclesByPage((isset($params['page']) && $params['page']!=''?$params['page']:1)));
-    });
+        $app->get('/{id}[/]', function (Request $request, Response $response, $args) {
+            $params =$request->getQueryParams();
+            return wookieEncode($params,searchVehicleByID($args['id']));
+        });
 
-    $app->get('/vehicles/{id}/', function (Request $request, Response $response, $args) {
-        $params =$request->getQueryParams();
-        return wookieEncode($params,searchVehicleByID($args['id']));
+        $app->group('/amount', function () use ($app) {
+            $app->get('/get[/]', function (Request $request, Response $response, $args) {
+                $params =$request->getQueryParams();
+                return wookieEncode($params,searchVehicleAmountByID((isset($params['id']) && $params['id']!=''?$params['id']:0)));
+            });
+            $app->get('/increase[/]', function (Request $request, Response $response, $args) {
+                $params =$request->getQueryParams();
+                return wookieEncode($params,increaseVehicleAmountByID((isset($params['id']) && $params['id']!=''?$params['id']:0),(isset($params['amount']) && $params['amount']!=''?$params['amount']:null)));
+            });
+            $app->get('/decrease[/]', function (Request $request, Response $response, $args) {
+                $params =$request->getQueryParams();
+                return wookieEncode($params,decreaseVehicleAmountByID((isset($params['id']) && $params['id']!=''?$params['id']:0),(isset($params['amount']) && $params['amount']!=''?$params['amount']:null)));
+            });
+        });
     });
 
     $app->get('/init/', function (Request $request, Response $response) {

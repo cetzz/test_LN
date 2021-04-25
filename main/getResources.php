@@ -127,13 +127,18 @@ function searchVehicleByID($vehicleID,$encode=true){
  * @param   $page
  * @return  json of the page
  */
-function getFilmsByPage($page){
+function getFilms($page,$search){
     $return=array();
     $returnresult=array();
     $offset=0;
+    if($search!=null){
+        $searchQuery='WHERE (FilmTitle  LIKE "%'.$search.'%" )';
+    }else{
+        $searchQuery='';
+    } 
     if (is_numeric($page)){
         $offset=getOffset($page);
-        $results=loadQueryArray('SELECT FilmID FROM Films ORDER BY FilmID ASC LIMIT 10 OFFSET '.$offset);
+        $results=loadQueryArray('SELECT FilmID FROM Films '.$searchQuery.' ORDER BY FilmID ASC LIMIT 10 OFFSET '.$offset);
         if($results!=null){
             foreach($results as $result){
                 $returnresult[] = searchFilmByID($result['FilmID'],false);
@@ -146,7 +151,7 @@ function getFilmsByPage($page){
         $return['detail']=MSG_NOT_FOUND;
         return(json_encode($return));
     }
-    $return['count']=loadQueryArray('SELECT COUNT(*) as FilmsCount FROM Films')[0]['FilmsCount'];
+    $return['count']=loadQueryArray('SELECT COUNT(*) as FilmsCount FROM Films '.$searchQuery)[0]['FilmsCount'];
     if($offset+10<=$return['count']){
         $return['next']=LOCAL_URL.'/films/?page='.($page+1);
     }else{
@@ -166,13 +171,18 @@ function getFilmsByPage($page){
  * @param   $page
  * @return  json of the page
  */
-function getStarshipsByPage($page){
+function getStarships($page,$search){
     $return=array();
     $returnresult=array();
     $offset=0;
+    if($search!=null){
+        $searchQuery='WHERE (StarshipName  LIKE "%'.$search.'%" or StarshipModel LIKE "%'.$search.'%")';
+    }else{
+        $searchQuery='';
+    } 
     if (is_numeric($page)){
         $offset=getOffset($page);
-        $results=loadQueryArray('SELECT StarshipID FROM Starships ORDER BY StarshipID ASC LIMIT 10 OFFSET '.$offset);
+        $results=loadQueryArray('SELECT StarshipID FROM Starships '.$searchQuery.' ORDER BY StarshipID ASC LIMIT 10 OFFSET '.$offset);
         if($results!=null){
             foreach($results as $result){
                 $returnresult[] = searchStarshipByID($result['StarshipID'],false);
@@ -185,7 +195,7 @@ function getStarshipsByPage($page){
         $return['detail']=MSG_NOT_FOUND;
         return(json_encode($return));
     }
-    $return['count']=loadQueryArray('SELECT COUNT(*) as StarshipsCount FROM Starships')[0]['StarshipsCount'];
+    $return['count']=loadQueryArray('SELECT COUNT(*) as StarshipsCount FROM Starships '.$searchQuery)[0]['StarshipsCount'];
     if($offset+10<=$return['count']){
         $return['next']=LOCAL_URL.'/starships/?page='.($page+1);
     }else{
@@ -205,13 +215,18 @@ function getStarshipsByPage($page){
  * @param   $page
  * @return  json of the page
  */
-function getVehiclesByPage($page){
+function getVehicles($page,$search){
     $return=array();
     $returnresult=array();
     $offset=0;
+    if($search!=null){
+        $searchQuery='WHERE (VehicleName  LIKE "%'.$search.'%" or VehicleModel LIKE "%'.$search.'%")';
+    }else{
+        $searchQuery='';
+    } 
     if (is_numeric($page)){
         $offset=getOffset($page);
-        $results=loadQueryArray('SELECT VehicleID FROM Vehicles ORDER BY VehicleID ASC LIMIT 10 OFFSET '.$offset);
+        $results=loadQueryArray('SELECT VehicleID FROM Vehicles '.$searchQuery.' ORDER BY VehicleID ASC LIMIT 10 OFFSET '.$offset);
         if($results!=null){
             foreach($results as $result){
                 $returnresult[] = searchVehicleByID($result['VehicleID'],false);
@@ -224,7 +239,7 @@ function getVehiclesByPage($page){
         $return['detail']=MSG_NOT_FOUND;
         return(json_encode($return));
     }
-    $return['count']=loadQueryArray('SELECT COUNT(*) as VehiclesCount FROM Vehicles')[0]['VehiclesCount'];
+    $return['count']=loadQueryArray('SELECT COUNT(*) as VehiclesCount FROM Vehicles '.$searchQuery)[0]['VehiclesCount'];
     if(($offset+10)<=$return['count']){
         $return['next']=LOCAL_URL.'/vehicles/?page='.($page+1);
     }else{
@@ -239,6 +254,38 @@ function getVehiclesByPage($page){
     return(json_encode($return));
 }
 
+
+/***
+ * search Starship amount by ID
+ * @param   $starshipID
+ * @return  array
+ */
+function searchStarshipAmountByID($starshipID){
+    $return=array();
+    $result=searchStarshipByID($starshipID,false);
+    if(isset($result['detail'])){
+        return json_encode($result);
+    }       
+    $return['amount']=$result['starship_amount'];
+        
+    return json_encode($return);
+}
+
+/***
+ * search Starship amount by ID
+ * @param   $starshipID
+ * @return  array
+ */
+function searchVehicleAmountByID($vehicleID){
+    $return=array();
+    $result=searchVehicleByID($vehicleID,false);
+    if(isset($result['detail'])){
+        return json_encode($result);
+    }       
+    $return['amount']=$result['vehicle_amount'];
+        
+    return json_encode($return);
+}
 /***
  * get offset for pagination
  * @param   $page

@@ -94,4 +94,41 @@
     function getFilmsOfVehicle($vehicleID){
         return executeQuery('SELECT Films.* FROM VehiclesInFilms INNER JOIN Films ON Films.FilmID = VehiclesInFilms.FilmID WHERE VehiclesInFilms.VehicleID='.$vehicleID);
     }
+
+/***
+ * check if the amount is correct
+ * @param   $amount
+ * @return  array with a boolean (ok) saying if it is valid or not, and the detail of why it is or not.
+ */
+    function checkAmount($amount){
+        if ($amount==null){
+            $return['ok']=false;  
+            $return['detail']=MSG_NO_AMOUNT;    
+            return $return;
+        }
+        if (!is_numeric($amount)){
+            $return['ok']=false;
+            $return['detail']=MSG_NAN_AMOUNT;    
+            return $return;
+        }
+        if ($amount<0){
+            $return['ok']=false;
+            $return['detail']=MSG_NEGATIVE_AMOUNT;    
+            return $return;
+        }
+        if ($amount==0){
+            $return['ok']=false;
+            $return['detail']=MSG_ZERO_AMOUNT;    
+            return $return;
+        }
+        if ($amount!=floor($amount)){
+            $return['ok']=false;
+            $return['detail']=MSG_DECIMAL_AMOUNT;    
+            return $return;
+        }
+        $return['ok']=true;
+        $return['detail']=MSG_VALID_AMOUNT;
+        return $return;
+        
+    }
 ?>

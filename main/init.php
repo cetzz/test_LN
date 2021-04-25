@@ -65,7 +65,7 @@ function initializeDatabase($params){
         $response= json_decode(curl_exec($ch),true);
         foreach ($response['results'] as $film){
             $filmResponse = insertFilm($film);
-            if ($filmResponse['status']){
+            if ($filmResponse['success']){
                 $successful++;
             }else{
                 $failed++;
@@ -92,7 +92,7 @@ function initializeDatabase($params){
         $response = json_decode(curl_exec($ch),true);
         foreach ($response['results'] as $starship){
             $starshipResponse=insertStarship($starship);
-            if ($starshipResponse['status']){
+            if ($starshipResponse['success']){
                 $successful++;
             }else{
                 $failed++;
@@ -122,7 +122,7 @@ function initializeDatabase($params){
         $response = json_decode(curl_exec($ch),true);
         foreach ($response['results'] as $vehicle){
             $vehicleResponse=insertVehicle($vehicle);
-            if ($vehicleResponse['status']){
+            if ($vehicleResponse['success']){
                 $successful++;
             }else{
                 $failed++;
@@ -281,9 +281,9 @@ function initializeDatabase($params){
             $filmID=getLastInsert();     
             executeQuery('UPDATE Films SET FilmURL="'.LOCAL_URL.'/films/'.$filmID.'/" WHERE FilmID='.$filmID);  
             if($statement->execute($array)){
-                    $response['status']=true;
+                    $response['success']=true;
             }else{
-                    $response['status']=false;   
+                    $response['success']=false;   
             }
             return $response;
         }
@@ -348,9 +348,9 @@ function initializeDatabase($params){
                 'VehicleAmount'=>0);
             $statement=prepareQuery($query);
             if($statement->execute($array)){
-                    $response['status']=true;
+                    $response['success']=true;
             }else{
-                    $response['status']=false;   
+                    $response['success']=false;   
             }
             $vehicleID=getLastInsert();      
             executeQuery('UPDATE Vehicles SET VehicleURL="'.LOCAL_URL.'/vehicles/'.$vehicleID.'/" WHERE VehicleID='.$vehicleID);
@@ -437,9 +437,9 @@ function initializeDatabase($params){
                 'StarshipAmount' => 0 );
             $statement=prepareQuery($query);
             if($statement->execute($array)){
-                    $response['status']=true;
+                    $response['success']=true;
             }else{
-                    $response['status']=false;   
+                    $response['success']=false;   
             }
             $starshipID=getLastInsert();    
             executeQuery('UPDATE Starships SET StarshipURL="'.LOCAL_URL.'/starships/'.$starshipID.'/" WHERE StarshipID='.$starshipID);  

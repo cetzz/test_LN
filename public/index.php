@@ -2,10 +2,11 @@
 
 require '../vendor/autoload.php';
 require '../src/conf.php';
-require '../src/database.php';
 require '../src/functions.php';
+require '../src/database.php';
 require '../main/init.php';
 require '../main/getResources.php';
+require '../main/modifyResources.php';
 
 $config = [
     'settings' => [
