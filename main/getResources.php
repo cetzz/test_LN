@@ -133,8 +133,10 @@ function getFilms($page,$search){
     $offset=0;
     if($search!=null){
         $searchQuery='WHERE (FilmTitle  LIKE "%'.$search.'%" )';
+        $urlQuery='&search='.$search;
     }else{
         $searchQuery='';
+        $urlQuery='';
     } 
     if (is_numeric($page)){
         $offset=getOffset($page);
@@ -152,13 +154,13 @@ function getFilms($page,$search){
         return(json_encode($return));
     }
     $return['count']=loadQueryArray('SELECT COUNT(*) as FilmsCount FROM Films '.$searchQuery)[0]['FilmsCount'];
-    if($offset+10<=$return['count']){
-        $return['next']=LOCAL_URL.'/films/?page='.($page+1);
+    if($offset+10<$return['count']){
+        $return['next']=LOCAL_URL.'/films/?page='.($page+1).$urlQuery;
     }else{
         $return['next']=null;
     }
     if($page-1>0){
-        $return['previous']=LOCAL_URL.'/films/?page='.($page-1);
+        $return['previous']=LOCAL_URL.'/films/?page='.($page-1).$urlQuery;
     }else{
         $return['previous']=null;
     }
@@ -177,8 +179,10 @@ function getStarships($page,$search){
     $offset=0;
     if($search!=null){
         $searchQuery='WHERE (StarshipName  LIKE "%'.$search.'%" or StarshipModel LIKE "%'.$search.'%")';
+        $urlQuery='&search='.$search;
     }else{
         $searchQuery='';
+        $urlQuery='';
     } 
     if (is_numeric($page)){
         $offset=getOffset($page);
@@ -196,13 +200,13 @@ function getStarships($page,$search){
         return(json_encode($return));
     }
     $return['count']=loadQueryArray('SELECT COUNT(*) as StarshipsCount FROM Starships '.$searchQuery)[0]['StarshipsCount'];
-    if($offset+10<=$return['count']){
-        $return['next']=LOCAL_URL.'/starships/?page='.($page+1);
+    if($offset+10<$return['count']){
+        $return['next']=LOCAL_URL.'/starships/?page='.($page+1).$urlQuery;
     }else{
         $return['next']=null;
     }
     if($page-1>0){
-        $return['previous']=LOCAL_URL.'/starships/?page='.($page-1);
+        $return['previous']=LOCAL_URL.'/starships/?page='.($page-1).$urlQuery;
     }else{
         $return['previous']=null;
     }
@@ -221,8 +225,10 @@ function getVehicles($page,$search){
     $offset=0;
     if($search!=null){
         $searchQuery='WHERE (VehicleName  LIKE "%'.$search.'%" or VehicleModel LIKE "%'.$search.'%")';
+        $urlQuery='&search='.$search;
     }else{
         $searchQuery='';
+        $urlQuery='';
     } 
     if (is_numeric($page)){
         $offset=getOffset($page);
@@ -240,13 +246,13 @@ function getVehicles($page,$search){
         return(json_encode($return));
     }
     $return['count']=loadQueryArray('SELECT COUNT(*) as VehiclesCount FROM Vehicles '.$searchQuery)[0]['VehiclesCount'];
-    if(($offset+10)<=$return['count']){
-        $return['next']=LOCAL_URL.'/vehicles/?page='.($page+1);
+    if($offset+10<$return['count']){
+        $return['next']=LOCAL_URL.'/vehicles/?page='.($page+1).$urlQuery;
     }else{
         $return['next']=null;
     }
     if($page-1>0){
-        $return['previous']=LOCAL_URL.'/vehicles/?page='.($page-1);
+        $return['previous']=LOCAL_URL.'/vehicles/?page='.($page-1).$urlQuery;
     }else{
         $return['previous']=null;
     }
