@@ -195,6 +195,7 @@ Example response:
     "detail": "Amount increased"
 }
 ```
+
     `/starships/amount/get/?id={id}` --get the amount of starships by its ID - requires: id<br>
     `/starships/amount/set/?id={id}&amount={amount}` --set the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
     `/starships/amount/increase/?id={id}&amount={amount}` --increase the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
@@ -267,12 +268,12 @@ Example request:<br>
 }
 ```
 
-    `/vehicles/amount/get/?id={id}` --get the amount of vehicles by its ID - requires: id<br>
-    `/vehicles/amount/set/?id={id}&amount={amount}` --set the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
-    `/vehicles/amount/increase/?id={id}&amount={amount}` --increase the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
-    `/vehicles/amount/decrease/?id={id}&amount={amount}` --decrease the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
+   `/vehicles/amount/get/?id={id}` --get the amount of vehicles by its ID - requires: id<br>
+   `/vehicles/amount/set/?id={id}&amount={amount}` --set the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
+   `/vehicles/amount/increase/?id={id}&amount={amount}` --increase the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
+   `/vehicles/amount/decrease/?id={id}&amount={amount}` --decrease the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
     
-    Attributes:<br>
+   Attributes:<br>
      Set, increase and decrease respond with a success attribute and the detail attribute, while get responds with the amount attribute.<br>
 
 **Films:**
@@ -326,9 +327,9 @@ Example response:<br>
 - Endpoints:
 The parameters are `id` (number) and `amount` (page).
 
-    `/films/` --get all the films resources, divided by pages of ten.<br>
-    `/films/?page={page}` --get the specified page. - requires: page<br>
-    `/films/{id}/` --get an individual film by its ID. - requires: id<br>
+   `/films/` --get all the films resources, divided by pages of ten.<br>
+   `/films/?page={page}` --get the specified page. - requires: page<br>
+   `/films/{id}/` --get an individual film by its ID. - requires: id<br>
     
    Attributes:<br>
     The attributes are identical to SWAPI's, but with an id added<br>
