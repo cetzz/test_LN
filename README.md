@@ -19,9 +19,9 @@ The installation procedure has been tested on Windows 10, other OS might not beh
  - Install a XAMP (Any SQL-PHP server) and turn it on. Any XAMP server should work, but as an example I'll be using XAMPP.
  - In the root of your web server (in case of XAMPP, it should be something like C:\xampp\htdocs) clone the repository
  - Install Composer in the folder where the repository is (C:\xampp\htdocs\test_LN in this example) with the following command: `composer install`
- - Excecute the route public/init/ (http://localhost/test_LN/public/init/ in this example) . This will take care of initializing the database, creating the tables, and scraping the original SWAPI for the necessary data.
-   **IMPORTANT!** A connection to the internet is necessary for /init/ to work, since it needs to scrape data from the original SWAPI, if the connection is slow, look at the log attribute in the response, if there are failed inserts, try again.
-   **IMPORTANT!** If you have already used /init/ and you need to use it again, use the parameter 'delete' to allow /init/ to delete the current database (http://localhost/test_LN/public/init/?delete).
+ - Excecute the route public/init/ (http://localhost/test_LN/public/init/ in this example) . This will take care of initializing the database, creating the tables, and scraping the original SWAPI for the necessary data.<br>
+   **IMPORTANT!** A connection to the internet is necessary for /init/ to work, since it needs to scrape data from the original SWAPI, if the connection is slow, look at the log attribute in the response, if there are failed inserts, try again.<br>
+   **IMPORTANT!** If you have already used /init/ and you need to use it again, use the parameter 'delete' to allow /init/ to delete the current database (http://localhost/test_LN/public/init/?delete).<br>
  - Update the conf.php with the base url of the API. There is an example already there, as LOCAL_URL. If it is the same, great!
 
 And you are done!
