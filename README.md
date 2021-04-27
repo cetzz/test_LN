@@ -43,7 +43,7 @@ This API doesn't have any authentication, as it is an open API. But only GET is 
 ## Searching
 Existing resources support a search parameter to filter the results. This allows you to make queries like:<br>
 `http://localhost/test_LN/public/vehicles/?search=AT-AT`<br>
-These searches are case-insensitive. Check out the individual resource documentation below to see which fields are supported for what resource.<br>
+These searches are case-insensitive. Check out the individual resource documentation below to see which fields are supported for each resource.<br>
 
 ## Encodings
 As the original SWAPI, this clone provides two encodings you can render the data with.
