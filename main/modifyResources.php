@@ -146,3 +146,64 @@ function decreaseStarshipAmountByID($starshipID,$amount){
         return json_encode($return);
     }
 }
+
+/***
+ * Set vehicle amount by ID
+ * @param   $VehicleID the id of the vehicle
+ * @param   $amount the amount that you want to set
+ * @return  json of the detail(detail) and if it was successful(success) or not
+ */
+function setVehicleAmountByID($vehicleID,$amount){
+    $return=array();
+    $checkAmount=checkAmount($amount);
+    if($checkAmount['ok']){
+        $query= 'UPDATE Vehicles SET VehicleAmount='.$amount.' WHERE VehicleID=:VehicleID';
+        $statement=prepareQuery($query);
+        $array=array('VehicleID'=>$vehicleID);
+        $statement->execute($array);
+        if($statement->rowCount()==0){
+            $return['detail']=MSG_NO_ROWS_AFFECTED;
+            $return['success']=false;
+            return json_encode($return);
+        }else{
+            $return['detail']=MSG_AMOUNT_SET;
+            $return['success']=true;
+            return json_encode($return);
+        }
+    }else{
+        $return['detail']=$checkAmount['detail'];
+        $return['success']=false;
+        return json_encode($return);
+    }
+}
+/***
+ * Set Starship amount by ID
+ * @param   $starshipID the id of the starship
+ * @param   $amount the amount that you want to set
+ * @return  json of the detail(detail) and if it was successful(success) or not
+ */
+function setStarshipAmountByID($starshipID,$amount){
+    $return=array();
+    $checkAmount=checkAmount($amount);
+    if($checkAmount['ok']){
+        $query= 'UPDATE Starships SET StarshipAmount='.$amount.' WHERE StarshipID=:StarshipID';
+        $statement=prepareQuery($query);
+        $array=array('StarshipID'=>$starshipID);
+        $statement->execute($array);
+        if($statement->rowCount()==0){
+            $return['success']=false;
+            $return['detail']=MSG_NO_ROWS_AFFECTED;
+            return json_encode($return);
+        }else{
+            $return['success']=true;
+            $return['detail']=MSG_AMOUNT_SET;
+            return json_encode($return);
+        }
+    }else{
+        $return['success']=false;
+        $return['detail']=$checkAmount['detail'];
+        return json_encode($return);
+    }
+}
+
+?>

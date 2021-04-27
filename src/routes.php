@@ -10,7 +10,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
         $response=array();
         $params =$request->getQueryParams();
         foreach ($routes as $route) {
-            $response[str_replace('/','',$route->getPattern())]=$route->getPattern();
+            $response[str_replace('}','',str_replace('{','',str_replace(']','',str_replace('[','',$route->getPattern()))))]=$route->getPattern();
         }
         array_shift($response);
 
@@ -54,6 +54,13 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
                 return wookieEncode($params,searchStarshipAmountByID($id));
             });
+            $app->get('/set[/]', function (Request $request, Response $response, $args) {
+                $params =$request->getQueryParams();
+                $id=(isset($params['id']) && $params['id']!=''?$params['id']:0);
+                $amount=(isset($params['amount']) && $params['amount']!=''?$params['amount']:null);
+
+                return wookieEncode($params,setStarshipAmountByID($id,$amount));
+            });
             $app->get('/increase[/]', function (Request $request, Response $response, $args) {
                 $params =$request->getQueryParams();
                 $id=(isset($params['id']) && $params['id']!=''?$params['id']:0);
@@ -93,6 +100,13 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
                 $id=(isset($params['id']) && $params['id']!=''?$params['id']:0);
 
                 return wookieEncode($params,searchVehicleAmountByID($id));
+            });
+            $app->get('/set[/]', function (Request $request, Response $response, $args) {
+                $params =$request->getQueryParams();
+                $id=(isset($params['id']) && $params['id']!=''?$params['id']:0);
+                $amount=(isset($params['amount']) && $params['amount']!=''?$params['amount']:null);
+
+                return wookieEncode($params,setVehicleAmountByID($id,$amount));
             });
             $app->get('/increase[/]', function (Request $request, Response $response, $args) {
                 $params =$request->getQueryParams();

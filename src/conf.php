@@ -16,6 +16,7 @@
 	define('MSG_LOWERTHANZERO_AMOUNT','The amount decreased can\'t be higher than the set amount');
 	define('MSG_VALID_AMOUNT','The amount is a valid a mount');
 	define('MSG_NO_ROWS_AFFECTED','No rows affected, check the ID');
+	define('MSG_AMOUNT_SET','Amount set');
 	define('MSG_AMOUNT_INCREASED','Amount increased');
 	define('MSG_AMOUNT_DECREASED','Amount decreased');
 	define('MSG_NOT_FOUND','Not found');
