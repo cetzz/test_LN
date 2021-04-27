@@ -58,10 +58,10 @@ Since this was made as a test, I've implemented just the necessary.
 I implemented Starships and Vehicles as that was what was requested by the test, but I also implemented Films as it was a good way to practice table relationships, and the Root resource to show the routing.
 
 **ROOT:**
-The root resource provides information on the routing of the API. 
-Example request:
+The root resource provides information on the routing of the API. <br>
+Example request:<br>
 `http://localhost/test_LN/public/`
-
+<br>
 Example response:
 `{
     "/films/": "/films[/]",
@@ -87,9 +87,9 @@ And the {} curly brackets mean that it is a variable, so if the id was 1, /vehic
 
 **INIT:**
 This endpoint creates the database, tables, and scrapes the necessary data for this API to work automatically. It saves a lot of time on the installation, since you don't have to execute any sql files by yourself, and it comes with the plus of the fact that you don't need to use any database managing software to make this API work. 
-Example request:
+<br>Example request:<br>
 `http://localhost/test_LN/public/init/`
-
+<br>
 - Endpoints:
     The parameter is `delete` (empty).
     
@@ -107,10 +107,10 @@ Example request:
 
 **Starships:**
 
-The resource Starships provides information about the Starships.
-Example request:
+The resource Starships provides information about the Starships.<br>
+Example request:<br>
 `http://localhost/test_LN/public/starships/`
-
+<br>
 - Endpoints:
     The parameters are `id` (number) and `page` (number).
     
@@ -128,9 +128,10 @@ Example request:
 - EXTRA ENDPOINTS:
     The /amount/ route lets you control the amount of starships there are of each single one. There is data validation in all of them, including things like if a decreased amount is smaller than the set amount, etc.<br>
     The parameters are `id` (number) and `amount` (number).
-    
-    Example request:
+    <br>
+    Example request:<br>
         `http://localhost/test_LN/public/starships/amount/increase/?id=1&amount=10`<br>
+
     `/starships/amount/get/?id={id}` --get the amount of starships by its ID - requires: id<br>
     `/starships/amount/set/?id={id}&amount={amount}` --set the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
     `/starships/amount/increase/?id={id}&amount={amount}` --increase the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
@@ -141,9 +142,9 @@ Example request:
 
 **Vehicles:**
 
-The resource Vehicles provides information about the Vehicles. This one works identical to the Starship resource.
-Example request:
-`http://localhost/test_LN/public/vehicles/`
+The resource Vehicles provides information about the Vehicles. This one works identical to the Starship resource.<br>
+Example request:<br>
+`http://localhost/test_LN/public/vehicles/`<br>
 
 - Endpoints:
     The parameters are `id` (number) and `page` (number).
@@ -162,9 +163,9 @@ Example request:
 - EXTRA ENDPOINTS:
     The /amount/ route lets you control the amount of vehicles there are of each single one. There is data validation in all of them, including things like if a decreased amount is smaller than the set amount, etc.
     The parameters are `id` (number) and `amount` (number).
-    
-    Example request:
-        `http://localhost/test_LN/public/vehicles/amount/increase/?id=1&amount=10`
+    <br>
+    Example request:<br>
+        `http://localhost/test_LN/public/vehicles/amount/increase/?id=1&amount=10`<br>
     `/vehicles/amount/get/?id={id}` --get the amount of vehicles by its ID - requires: id
     `/vehicles/amount/set/?id={id}&amount={amount}` --set the amount of vehicles by its ID and an AMOUNT - requires: id,amount
     `/vehicles/amount/increase/?id={id}&amount={amount}` --increase the amount of vehicles by its ID and an AMOUNT - requires: id,amount
@@ -175,9 +176,9 @@ Example request:
 
 **Films:**
 
-The resource Films provides information about the Films. 
-Example request:
-`http://localhost/test_LN/public/films/`
+The resource Films provides information about the Films. <br>
+Example request:<br>
+`http://localhost/test_LN/public/films/`<br>
 
 - Endpoints:
 The parameters are `id` (number) and `amount` (page).
