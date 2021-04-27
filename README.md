@@ -163,15 +163,15 @@ Example request:<br>
     `model`
 
 - EXTRA ENDPOINTS:
-    The /amount/ route lets you control the amount of vehicles there are of each single one. There is data validation in all of them, including things like if a decreased amount is smaller than the set amount, etc.
-    The parameters are `id` (number) and `amount` (number).
+    The /amount/ route lets you control the amount of vehicles there are of each single one. There is data validation in all of them, including things like if a decreased amount is smaller than the set amount, etc.<br>
+    The parameters are `id` (number) and `amount` (number).<br>
     <br>
     Example request:<br>
-        `http://localhost/test_LN/public/vehicles/amount/increase/?id=1&amount=10`<br>
-    `/vehicles/amount/get/?id={id}` --get the amount of vehicles by its ID - requires: id
-    `/vehicles/amount/set/?id={id}&amount={amount}` --set the amount of vehicles by its ID and an AMOUNT - requires: id,amount
-    `/vehicles/amount/increase/?id={id}&amount={amount}` --increase the amount of vehicles by its ID and an AMOUNT - requires: id,amount
-    `/vehicles/amount/decrease/?id={id}&amount={amount}` --decrease the amount of vehicles by its ID and an AMOUNT - requires: id,amount
+        `http://localhost/test_LN/public/vehicles/amount/increase/?id=1&amount=10`<br><br>
+    `/vehicles/amount/get/?id={id}` --get the amount of vehicles by its ID - requires: id<br>
+    `/vehicles/amount/set/?id={id}&amount={amount}` --set the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
+    `/vehicles/amount/increase/?id={id}&amount={amount}` --increase the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
+    `/vehicles/amount/decrease/?id={id}&amount={amount}` --decrease the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
     
     Attributes:
      Set, increase and decrease respond with a success attribute and the detail attribute, while get responds with the amount attribute.
@@ -185,9 +185,9 @@ Example request:<br>
 - Endpoints:
 The parameters are `id` (number) and `amount` (page).
 
-    `/films/` --get all the films resources, divided by pages of ten.
-    `/films/?page={page}` --get the specified page. - requires: page
-    `/films/{id}/` --get an individual film by its ID. - requires: id
+    `/films/` --get all the films resources, divided by pages of ten.<br>
+    `/films/?page={page}` --get the specified page. - requires: page<br>
+    `/films/{id}/` --get an individual film by its ID. - requires: id<br>
     
    Attributes:
     The attributes are identical to SWAPI's, but with an id added
