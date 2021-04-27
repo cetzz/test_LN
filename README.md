@@ -22,6 +22,7 @@ The installation procedure has been tested on Windows 10, other OS might not beh
  - Excecute the route public/init/ (http://localhost/test_LN/public/init/ in this example) . This will take care of initializing the database, creating the tables, and scraping the original SWAPI for the necessary data.
    **IMPORTANT!** A connection to the internet is necessary for /init/ to work, since it needs to scrape data from the original SWAPI, if the connection is slow, look at the log attribute in the response, if there are failed inserts, try again.
    **IMPORTANT!** If you have already used /init/ and you need to use it again, use the parameter 'delete' to allow /init/ to delete the current database (http://localhost/test_LN/public/init/?delete).
+ - Update the conf.php with the base url of the API. There is an example already there, as LOCAL_URL. If it is the same, great!
 
 And you are done!
 
