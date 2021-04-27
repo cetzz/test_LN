@@ -62,7 +62,7 @@ I implemented Starships and Vehicles as that was what was requested by the test,
 
 **ROOT:**
 
-The root resource provides information on the routing of the API. <br>
+The root resource provides information on the routing of the API and all its available endpoints. <br>
 Example request:<br>
 `http://localhost/test_LN/public/`
 <br><br>
@@ -89,7 +89,7 @@ Example response:
 
 The [] brackets mean that it is not necessary, so /films/ can also be /films
 
-And the {} curly brackets mean that it is a variable, so if the id was 1, /vehicles/{id}/ would be /vehicles/1/
+The {} curly brackets mean that it is a variable, so if the id was 1, /vehicles/{id}/ would be /vehicles/1/
 
 **INIT:**
 
