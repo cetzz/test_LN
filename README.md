@@ -96,7 +96,24 @@ And the {} curly brackets mean that it is a variable, so if the id was 1, /vehic
 This endpoint creates the database, tables, and scrapes the necessary data for this API to work automatically. It saves a lot of time on the installation, since you don't have to execute any sql files by yourself, and it comes with the plus of the fact that you don't need to use any database managing software to make this API work. 
 <br>Example request:<br>
 `http://localhost/test_LN/public/init/`
-<br>
+<br><br>
+Example response:
+```json
+{
+    "log": [
+        "Database created correctly.",
+        "6 films were inserted successfully, 0 failed.",
+        "36 starships were inserted successfully, 0 failed.",
+        "55 starship and film relationships were inserted successfully, 0 failed.",
+        "39 vehicles were inserted successfully, 0 failed.",
+        "49 vehicle and film relationships were inserted successfully, 0 failed.",
+        "Initialization completed. 179 inserts were successful, 0 failed."
+    ],
+    "failedInserts": 0,
+    "successfulInserts": 179
+}
+```
+
 - Endpoints:
     The parameter is `delete` (empty).
     
@@ -116,8 +133,40 @@ This endpoint creates the database, tables, and scrapes the necessary data for t
 
 The resource Starships provides information about the Starships.<br>
 Example request:<br>
-`http://localhost/test_LN/public/starships/`
-<br>
+`http://localhost/test_LN/public/starships/1/`
+<br><br>
+Example response:
+```json
+{
+    "id": "1",
+    "name": "CR90 corvette",
+    "model": "CR90 corvette",
+    "manufacturer": "Corellian Engineering Corporation",
+    "cost_in_credits": "3500000",
+    "length": "150",
+    "max_atmosphering_speed": "950",
+    "crew": "30-165",
+    "passengers": "600",
+    "cargo_capacity": "3000000",
+    "consumables": "1 year",
+    "hyperdrive_rating": "2.0",
+    "MGLT": "60",
+    "starship_class": "corvette",
+    "pilots": [
+        "Feature not yet developed"
+    ],
+    "films": [
+        "http://localhost/test_LN/public/films/1/",
+        "http://localhost/test_LN/public/films/3/",
+        "http://swapi.dev/api/films/6/"
+    ],
+    "created": "2014-12-10 14:20:33.000000",
+    "edited": "2021-04-27 12:35:18.209125",
+    "url": "http://localhost/test_LN/public/starships/1/",
+    "amount": "0"
+}
+```
+
 - Endpoints:<br>
     The parameters are `id` (number) and `page` (number).<br>
     
@@ -137,8 +186,15 @@ Example request:<br>
     The parameters are `id` (number) and `amount` (number).
     <br>
     Example request:<br>
-        `http://localhost/test_LN/public/starships/amount/increase/?id=1&amount=10`<br>
-
+        `http://localhost/test_LN/public/starships/amount/increase/?id=1&amount=10`
+        <br><br>
+    Example response:
+```json
+{
+    "success": true,
+    "detail": "Amount increased"
+}
+```
     `/starships/amount/get/?id={id}` --get the amount of starships by its ID - requires: id<br>
     `/starships/amount/set/?id={id}&amount={amount}` --set the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
     `/starships/amount/increase/?id={id}&amount={amount}` --increase the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
@@ -151,13 +207,42 @@ Example request:<br>
 
 The resource Vehicles provides information about the Vehicles. This one works identical to the Starship resource.<br>
 Example request:<br>
-`http://localhost/test_LN/public/vehicles/`<br>
+`http://localhost/test_LN/public/vehicles/1/`
+        <br><br>
+    Example response:
+```json
+{
+    "id": "1",
+    "name": "Sand Crawler",
+    "model": "Digger Crawler",
+    "manufacturer": "Corellia Mining Corporation",
+    "cost_in_credits": "150000",
+    "length": "36.8 ",
+    "max_atmosphering_speed": "30",
+    "crew": "46",
+    "passengers": "30",
+    "cargo_capacity": "50000",
+    "consumables": "2 months",
+    "vehicle_class": "wheeled",
+    "pilots": [
+        "Feature not yet developed"
+    ],
+    "films": [
+        "http://localhost/test_LN/public/films/1/",
+        "http://localhost/test_LN/public/films/5/"
+    ],
+    "created": "2014-12-10 15:36:25.000000",
+    "edited": "2021-04-27 12:35:19.987091",
+    "url": "http://localhost/test_LN/public/vehicles/1/",
+    "amount": "0"
+}
+```
 
 - Endpoints:
     The parameters are `id` (number) and `page` (number).
     
     `/vehicles/` --get all the vehicles resources, divided by pages of ten.
-    `/film/?page={page}` --get the specified page. - requires: page
+    `/vehicles/?page={page}` --get the specified page. - requires: page
     `/vehicles/{id}/` --get an individual vehicle by its ID. - requires: id
     
     Attributes:<br>
@@ -172,7 +257,16 @@ Example request:<br>
     The parameters are `id` (number) and `amount` (number).<br>
     <br>
     Example request:<br>
-        `http://localhost/test_LN/public/vehicles/amount/increase/?id=1&amount=10`<br><br>
+        `http://localhost/test_LN/public/vehicles/amount/increase/?id=1&amount=10`
+                <br><br>
+    Example response:
+```json
+{
+    "detail": "Amount increased",
+    "success": true
+}
+```
+
     `/vehicles/amount/get/?id={id}` --get the amount of vehicles by its ID - requires: id<br>
     `/vehicles/amount/set/?id={id}&amount={amount}` --set the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
     `/vehicles/amount/increase/?id={id}&amount={amount}` --increase the amount of vehicles by its ID and an AMOUNT - requires: id,amount<br>
@@ -186,6 +280,48 @@ Example request:<br>
 The resource Films provides information about the Films. <br>
 Example request:<br>
 `http://localhost/test_LN/public/films/`<br>
+<br>
+Example response:<br>
+```json
+{
+    "id": "1",
+    "title": "A New Hope",
+    "episode_id": "4",
+    "opening_crawl": "It is a period of civil war.\r\nRebel spaceships, striking\r\nfrom a hidden base, have won\r\ntheir first victory against\r\nthe evil Galactic Empire.\r\n\r\nDuring the battle, Rebel\r\nspies managed to steal secret\r\nplans to the Empire's\r\nultimate weapon, the DEATH\r\nSTAR, an armored space\r\nstation with enough power\r\nto destroy an entire planet.\r\n\r\nPursued by the Empire's\r\nsinister agents, Princess\r\nLeia races home aboard her\r\nstarship, custodian of the\r\nstolen plans that can save her\r\npeople and restore\r\nfreedom to the galaxy....",
+    "director": "George Lucas",
+    "producer": "Gary Kurtz, Rick McCallum",
+    "release_date": "1977-05-25 00:00:00.000000",
+    "characters": [
+        "Feature not yet developed"
+    ],
+    "planets": [
+        "Feature not yet developed"
+    ],
+    "starships": [
+        "http://localhost/test_LN/public/starships/1/",
+        "http://localhost/test_LN/public/starships/2/",
+        "http://localhost/test_LN/public/starships/3/",
+        "http://localhost/test_LN/public/starships/4/",
+        "http://localhost/test_LN/public/starships/5/",
+        "http://localhost/test_LN/public/starships/6/",
+        "http://localhost/test_LN/public/starships/7/",
+        "http://localhost/test_LN/public/starships/8/"
+    ],
+    "vehicles": [
+        "http://localhost/test_LN/public/vehicles/1/",
+        "http://localhost/test_LN/public/vehicles/2/",
+        "http://localhost/test_LN/public/vehicles/3/",
+        "http://localhost/test_LN/public/vehicles/4/"
+    ],
+    "species": [
+        "Feature not yet developed"
+    ],
+    "created": "2014-12-10 14:23:31.000000",
+    "edited": "2021-04-27 12:35:17.857038",
+    "url": "http://localhost/test_LN/public/films/1/"
+}
+```
+
 
 - Endpoints:
 The parameters are `id` (number) and `amount` (page).
