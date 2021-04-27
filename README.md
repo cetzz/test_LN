@@ -58,6 +58,7 @@ Since this was made as a test, I've implemented just the necessary.
 I implemented Starships and Vehicles as that was what was requested by the test, but I also implemented Films as it was a good way to practice table relationships, and the Root resource to show the routing.
 
 **ROOT:**
+
 The root resource provides information on the routing of the API. <br>
 Example request:<br>
 `http://localhost/test_LN/public/`
@@ -86,6 +87,7 @@ The [] brackets mean that it is not necessary, so /films/ can also be /films
 And the {} curly brackets mean that it is a variable, so if the id was 1, /vehicles/{id}/ would be /vehicles/1/
 
 **INIT:**
+
 This endpoint creates the database, tables, and scrapes the necessary data for this API to work automatically. It saves a lot of time on the installation, since you don't have to execute any sql files by yourself, and it comes with the plus of the fact that you don't need to use any database managing software to make this API work. 
 <br>Example request:<br>
 `http://localhost/test_LN/public/init/`
