@@ -124,10 +124,7 @@ Example response:
     `log` An array of strings that contains the log. It tells you what happened in text. <br>
     `failedInserts` Number of failed inserts.<br>
     `successfulInserts` Number of successful inserts.  <br>
-    
-    Search fields:<br>
-    `name`<br>
-    `model`<br>
+ 
 
 **Starships:**
 
