@@ -93,7 +93,7 @@ The {} curly brackets mean that it is a variable, so if the id was 1, /vehicles/
 
 **INIT:**
 
-This endpoint creates the database, tables, and scrapes the necessary data for this API to work automatically. It saves a lot of time on the installation, since you don't have to execute any sql files by yourself, and it comes with the plus of the fact that you don't need to use any database managing software to make this API work. 
+This endpoint creates the database, tables, and scrapes the necessary data for this API to work automatically. It saves a lot of time on the installation, since you don't have to execute any sql files by yourself, and it comes with the added benefit of the fact that you don't need to use any database managing software to make this API work. 
 <br>Example request:<br>
 `http://localhost/test_LN/public/init/`
 <br><br>
