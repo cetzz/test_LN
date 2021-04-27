@@ -91,12 +91,15 @@ Example request:
 
 - Endpoints:
     The parameter is `delete` (empty).
+    
     `/init/` --initializes the database, the tables and scrapes data
     `/init/?delete` --same as the other one, but with permissions to delete the database - requires: delete
+    
     Attributes:
     `log` An array of strings that contains the log. It tells you what happened in text. 
     `failedInserts` Number of failed inserts.
     `successfulInserts` Number of successful inserts.  
+    
     Search fields:
     `name`
     `model`
@@ -109,11 +112,14 @@ Example request:
 
 - Endpoints:
     The parameters are `id` (number) and `page` (number).
+    
     `/starships/` --get all the starships resources, divided by pages of ten.
     `/starships/?page={page}` --get the specified page. - requires: page
     `/starships/{id}/` --get an individual starship by its ID. - requires: id
+    
     Attributes:
     The attributes are identical to SWAPI's, but with an id and amount attributes added
+    
     Search fields:
     `name`
     `model`
@@ -121,12 +127,14 @@ Example request:
 - EXTRA ENDPOINTS:
     The /amount/ route lets you control the amount of starships there are of each single one. There is data validation in all of them, including things like if a decreased amount is smaller than the set amount, etc.
     The parameters are `id` (number) and `amount` (number).
+    
     Example request:
         `http://localhost/test_LN/public/starships/amount/increase/?id=1&amount=10`
     `/starships/amount/get/?id={id}` --get the amount of starships by its ID - requires: id
     `/starships/amount/set/?id={id}&amount={amount}` --set the amount of starships by its ID and an AMOUNT - requires: id,amount
     `/starships/amount/increase/?id={id}&amount={amount}` --increase the amount of starships by its ID and an AMOUNT - requires: id,amount
     `/starships/amount/decrease/?id={id}&amount={amount}` --decrease the amount of starships by its ID and an AMOUNT - requires: id,amount
+    
     Attributes:
     Set, increase and decrease respond with a success attribute and the detail attribute, while get responds with the amount attribute.
 
@@ -138,11 +146,14 @@ Example request:
 
 - Endpoints:
     The parameters are `id` (number) and `page` (number).
+    
     `/vehicles/` --get all the vehicles resources, divided by pages of ten.
     `/film/?page={page}` --get the specified page. - requires: page
     `/vehicles/{id}/` --get an individual vehicle by its ID. - requires: id
+    
     Attributes:
     The attributes are identical to SWAPI's, but with an id and amount attributes added
+    
     Search fields:
     `name`
     `model`
@@ -150,14 +161,16 @@ Example request:
 - EXTRA ENDPOINTS:
     The /amount/ route lets you control the amount of vehicles there are of each single one. There is data validation in all of them, including things like if a decreased amount is smaller than the set amount, etc.
     The parameters are `id` (number) and `amount` (number).
+    
     Example request:
         `http://localhost/test_LN/public/vehicles/amount/increase/?id=1&amount=10`
     `/vehicles/amount/get/?id={id}` --get the amount of vehicles by its ID - requires: id
     `/vehicles/amount/set/?id={id}&amount={amount}` --set the amount of vehicles by its ID and an AMOUNT - requires: id,amount
     `/vehicles/amount/increase/?id={id}&amount={amount}` --increase the amount of vehicles by its ID and an AMOUNT - requires: id,amount
     `/vehicles/amount/decrease/?id={id}&amount={amount}` --decrease the amount of vehicles by its ID and an AMOUNT - requires: id,amount
+    
     Attributes:
-    Set, increase and decrease respond with a success attribute and the detail attribute, while get responds with the amount attribute.
+     Set, increase and decrease respond with a success attribute and the detail attribute, while get responds with the amount attribute.
 
 **Films:**
 
@@ -167,17 +180,20 @@ Example request:
 
 - Endpoints:
 The parameters are `id` (number) and `amount` (page).
+
     `/films/` --get all the films resources, divided by pages of ten.
     `/films/?page={page}` --get the specified page. - requires: page
     `/films/{id}/` --get an individual film by its ID. - requires: id
-    Attributes:
+    
+   Attributes:
     The attributes are identical to SWAPI's, but with an id added
-    Search fields:
-    `name`
-    `model`
+    
+   Search fields:
+    `title`
 
 ## Testing
-    There is not a lot to test in this API. But the most failsafe way to test if it works or not is to use the /init/ endpoint, as it interacts with almost everything at the same time. If /init/ is working correctly, nothing should stop working.
+   There is not a lot to test in this API. But the most failsafe way to test if it works or not is to use the /init/ endpoint, as it interacts with almost everything at the same time. 
+   If /init/ is working correctly, nothing should stop working.
 ## Can I look at the code and use it?
 
 If you find something useful, sure! The proyect was made as a test, so the API is an open source proyect.
