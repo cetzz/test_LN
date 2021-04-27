@@ -13,6 +13,7 @@ function searchFilmByID($filmID,$encode=true){
     $result=$statement->fetch();
     $return=array();
     if ($result!=null){
+        $return['id']=$result['FilmID'];
         $return['title']=$result['FilmTitle'];
         $return['episode_id']=$result['FilmEpisodeID'];
         $return['opening_crawl']=$result['FilmOpeningCrawl'];
@@ -53,6 +54,7 @@ function searchStarshipByID($starshipID,$encode=true){
     $result=$statement->fetch();
     $return=array();
     if ($result!=null){
+        $return['id']=$result['StarshipID'];
         $return['name']=$result['StarshipName'];
         $return['model']=$result['StarshipModel'];
         $return['manufacturer']=$result['StarshipManufacturer'];
@@ -74,7 +76,7 @@ function searchStarshipByID($starshipID,$encode=true){
         $return['created']=$result['StarshipCreated'];
         $return['edited']=$result['StarshipEdited'];
         $return['url']=$result['StarshipURL'];
-        $return['starship_amount']=$result['StarshipAmount'];
+        $return['amount']=$result['StarshipAmount'];
     }else{
         $return['detail']=MSG_NOT_FOUND;
     }
@@ -95,6 +97,7 @@ function searchVehicleByID($vehicleID,$encode=true){
     $result=$statement->fetch();
     $return=array();
     if ($result!=null){
+        $return['id']=$result['VehicleID'];
         $return['name']=$result['VehicleName'];
         $return['model']=$result['VehicleModel'];
         $return['manufacturer']=$result['VehicleManufacturer'];
@@ -114,7 +117,7 @@ function searchVehicleByID($vehicleID,$encode=true){
         $return['created']=$result['VehicleCreated'];
         $return['edited']=$result['VehicleEdited'];
         $return['url']=$result['VehicleURL'];
-        $return['vehicle_amount']=$result['VehicleAmount'];
+        $return['amount']=$result['VehicleAmount'];
     }else{
         $return['detail']=MSG_NOT_FOUND;
     }
@@ -272,7 +275,7 @@ function searchStarshipAmountByID($starshipID){
     if(isset($result['detail'])){
         return json_encode($result);
     }       
-    $return['amount']=$result['starship_amount'];
+    $return['amount']=$result['amount'];
         
     return json_encode($return);
 }
@@ -288,7 +291,7 @@ function searchVehicleAmountByID($vehicleID){
     if(isset($result['detail'])){
         return json_encode($result);
     }       
-    $return['amount']=$result['vehicle_amount'];
+    $return['amount']=$result['amount'];
         
     return json_encode($return);
 }
