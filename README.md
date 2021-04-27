@@ -12,7 +12,7 @@ The other resources have not been implemented yet.
  
 
 ## Installing
-Getting the website up and running is a simple operation that can be done in a minute or two.
+Getting the website up and running is a simple operation that can be done in less than 10 minutes.
 
 The installation procedure has been tested on Windows 10, other OS might not behave in the same way, feel free to look up the dependencies yourself if you feel like these instructions don't work out for you.
 
