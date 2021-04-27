@@ -64,7 +64,8 @@ Example request:<br>
 `http://localhost/test_LN/public/`
 <br><br>
 Example response:
-`{
+```json
+{
     "/films/": "/films[/]",
     "/films/id/": "/films/{id}[/]",
     "/starships/": "/starships[/]",
@@ -80,7 +81,8 @@ Example response:
     "/vehicles/amount/increase/": "/vehicles/amount/increase[/]",
     "/vehicles/amount/decrease/": "/vehicles/amount/decrease[/]",
     "/init/": "/init[/]"
-}`
+}
+```
 
 The [] brackets mean that it is not necessary, so /films/ can also be /films
 
