@@ -34,6 +34,9 @@ The Base URL we'll be using is:
 
 The documentation below assumes you are prepending the Base URL to the endpoints in order to make requests.
 
+
+   **IMPORTANT!** If you want to expose the API to a network, for example, your Wi-Fi network, you should change 'localhost' for your current IP. 
+
 ## Authentication
 This API doesn't have any authentication, as it is an open API. But only GET is supported.
 
