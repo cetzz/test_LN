@@ -1,10 +1,10 @@
 Introduction
 =====
-This is a clone of swapi.dev API. It was made by looking at the responses, so everything here is my own code.
-It has a couple more features than the original, including a data scraper for the necessary resources, returning the id attribute , an amount property for each vehicle and starship, and endpoints to get, set, increase, and decrease those amounts.
-All the other features native to the swapi.dev API are there as well, like the Wookie encoder, the Searching functionalities, the pagination, etc.
-The resources implemented are Starships, Vehicles and Films.
-The other resources have not been implemented yet.
+This is a clone of swapi.dev API. It was made by looking at the responses, so everything here is my own code.<br>
+It has a couple more features than the original, including a data scraper for the necessary resources, returning the id attribute , an amount property for each vehicle and starship, and endpoints to get, set, increase, and decrease those amounts.<br>
+All the other features native to the swapi.dev API are there as well, like the Wookie encoder, the Searching functionalities, the pagination, etc.<br>
+The resources implemented are Starships, Vehicles and Films.<br>
+The other resources have not been implemented yet.<br>
 
 ## Dependencies
  - PHP 7.3.27 or greater
@@ -54,7 +54,7 @@ To use the Wookie encoder, just append format=wookiee to your urls:
 
 
 ## Resources
-Since this was made as a test, I've implemented just the necessary.
+Since this was made as a test, I've implemented just the necessary.<br>
 I implemented Starships and Vehicles as that was what was requested by the test, but I also implemented Films as it was a good way to practice table relationships, and the Root resource to show the routing.
 
 **ROOT:**
