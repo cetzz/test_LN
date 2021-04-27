@@ -196,13 +196,13 @@ Example response:
 }
 ```
 
-    `/starships/amount/get/?id={id}` --get the amount of starships by its ID - requires: id<br>
-    `/starships/amount/set/?id={id}&amount={amount}` --set the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
-    `/starships/amount/increase/?id={id}&amount={amount}` --increase the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
-    `/starships/amount/decrease/?id={id}&amount={amount}` --decrease the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
+   `/starships/amount/get/?id={id}` --get the amount of starships by its ID - requires: id<br>
+   `/starships/amount/set/?id={id}&amount={amount}` --set the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
+   `/starships/amount/increase/?id={id}&amount={amount}` --increase the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
+   `/starships/amount/decrease/?id={id}&amount={amount}` --decrease the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
     
-    Attributes:<br>
-    Set, increase and decrease respond with a success attribute and the detail attribute, while get responds with the amount attribute.<br>
+   Attributes:<br>
+   Set, increase and decrease respond with a success attribute and the detail attribute, while get responds with the amount attribute.<br>
 
 **Vehicles:**
 
