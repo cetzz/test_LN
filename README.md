@@ -38,9 +38,9 @@ The documentation below assumes you are prepending the Base URL to the endpoints
 This API doesn't have any authentication, as it is an open API. But only GET is supported.
 
 ## Searching
-Existing resources support a search parameter to filter the results. This allows you to make queries like:
-`http://localhost/test_LN/public/vehicles/?search=AT-AT`
-These searches are case-insensitive. Check out the individual resource documentation below to see which fields are supported for what resource.
+Existing resources support a search parameter to filter the results. This allows you to make queries like:<br>
+`http://localhost/test_LN/public/vehicles/?search=AT-AT`<br>
+These searches are case-insensitive. Check out the individual resource documentation below to see which fields are supported for what resource.<br>
 
 ## Encodings
 As the original SWAPI, this clone provides two encodings you can render the data with.
@@ -48,9 +48,9 @@ JSON
 JSON is the standard data format provided by default.
 
 Wookiee
-The same format as JSON, but in the language of the Wookies, Shyriiwook
-To use the Wookie encoder, just append format=wookiee to your urls:
-`http://localhost/test_LN/public/vehicles/?search=AT-AT&format=wookie`
+The same format as JSON, but in the language of the Wookies, Shyriiwook<br>
+To use the Wookie encoder, just append format=wookiee to your urls:<br>
+`http://localhost/test_LN/public/vehicles/?search=AT-AT&format=wookie`<br>
 
 
 ## Resources
