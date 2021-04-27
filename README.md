@@ -114,9 +114,9 @@ Example request:
 - Endpoints:
     The parameters are `id` (number) and `page` (number).
     
-    `/starships/` --get all the starships resources, divided by pages of ten.&nbsp;
-    `/starships/?page={page}` --get the specified page. - requires: page&nbsp;
-    `/starships/{id}/` --get an individual starship by its ID. - requires: id&nbsp;
+    `/starships/` --get all the starships resources, divided by pages of ten.<br/>
+    `/starships/?page={page}` --get the specified page. - requires: page<br/>
+    `/starships/{id}/` --get an individual starship by its ID. - requires: id<br>
     
     Attributes:
     The attributes are identical to SWAPI's, but with an id and amount attributes added
@@ -126,15 +126,15 @@ Example request:
     `model`
 
 - EXTRA ENDPOINTS:
-    The /amount/ route lets you control the amount of starships there are of each single one. There is data validation in all of them, including things like if a decreased amount is smaller than the set amount, etc.&nbsp;
+    The /amount/ route lets you control the amount of starships there are of each single one. There is data validation in all of them, including things like if a decreased amount is smaller than the set amount, etc.<br>
     The parameters are `id` (number) and `amount` (number).
     
     Example request:
-        `http://localhost/test_LN/public/starships/amount/increase/?id=1&amount=10`&nbsp;
-    `/starships/amount/get/?id={id}` --get the amount of starships by its ID - requires: id&nbsp;
-    `/starships/amount/set/?id={id}&amount={amount}` --set the amount of starships by its ID and an AMOUNT - requires: id,amount&nbsp;
-    `/starships/amount/increase/?id={id}&amount={amount}` --increase the amount of starships by its ID and an AMOUNT - requires: id,amount&nbsp;
-    `/starships/amount/decrease/?id={id}&amount={amount}` --decrease the amount of starships by its ID and an AMOUNT - requires: id,amount&nbsp;
+        `http://localhost/test_LN/public/starships/amount/increase/?id=1&amount=10`<br>
+    `/starships/amount/get/?id={id}` --get the amount of starships by its ID - requires: id<br>
+    `/starships/amount/set/?id={id}&amount={amount}` --set the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
+    `/starships/amount/increase/?id={id}&amount={amount}` --increase the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
+    `/starships/amount/decrease/?id={id}&amount={amount}` --decrease the amount of starships by its ID and an AMOUNT - requires: id,amount<br>
     
     Attributes:
     Set, increase and decrease respond with a success attribute and the detail attribute, while get responds with the amount attribute.
