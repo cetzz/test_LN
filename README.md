@@ -204,6 +204,6 @@ The parameters are `id` (number) and `amount` (page).
 
 If you find something useful, sure! The proyect was made as a test, so the API is an open source proyect.
 
-By the way, it would be really cool if you checked out https://github.com/cetzz/SWAPICLONE_Front , it is a front-end proyect that I made as an additional characteristic. It uses this API , so you can find some examples on how to use it there! Plus it looks pretty cool in my opinion. It's not fully responsive but I'll try to get it there. I'm more of a back-end type of guy.
+By the way, it would be really cool if you checked out https://github.com/cetzz/SWAPICLONE_Front , it is a front-end proyect that I made as an additional characteristic. It uses this API , so you can find some examples on how to use it there! Plus it looks pretty cool in my opinion. It's not fully responsive but I'll try to get it there. I'm more of a back-end type of guy, so I'll advice to use it on desktop for now.
 
 -Cristian Metz
