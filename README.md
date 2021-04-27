@@ -61,7 +61,7 @@ I implemented Starships and Vehicles as that was what was requested by the test,
 The root resource provides information on the routing of the API. <br>
 Example request:<br>
 `http://localhost/test_LN/public/`
-<br>
+<br><br>
 Example response:
 `{
     "/films/": "/films[/]",
